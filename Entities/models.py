@@ -47,7 +47,7 @@ class Article(models.Model):
 
 
 # Mode de livraison model, following the class diagramm specifications
-class ModeDeLivraiaon(models.Model):
+class ModeDeLivraison(models.Model):
     idModeDeLivraison = models.AutoField(primary_key=True)
     libelleModeDeLivraison = models.CharField(max_length=50)
     descriptionModeDeLivraison = models.CharField(max_length=256)
@@ -61,7 +61,7 @@ class ModeDePaiement(models.Model):
 # Commande model, following the class diagramm specifications
 class Commande(models.Model):
     idCommande = models.AutoField(primary_key=True)
-    modeDeLivraisonCommande = models.ForeignKey(ModeDeLivraiaon, on_delete=models.CASCADE)
+    modeDeLivraisonCommande = models.ForeignKey(ModeDeLivraison, on_delete=models.CASCADE)
     modeDePaiementCommande = models.ForeignKey(ModeDePaiement, on_delete=models.CASCADE)
     dateAjoutCommande = models.DateTimeField(auto_now_add=True)
     descriptionCommande = models.CharField(max_length=256)
