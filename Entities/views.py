@@ -3,6 +3,7 @@ from Entities.serializers import *
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import  JSONParser
 from django.http.response import JsonResponse
+from django.core.files.storage import default_storage
 
 
 
@@ -15,7 +16,7 @@ from django.http.response import JsonResponse
 def clientApi(request, id=0):
 
     if request.method == 'GET':
-        if id != 0:
+        if id != 0 :
             client = Client.objects.get(idClient=id)
             client_serializer = ClientSerializer(client)
             return JsonResponse(client_serializer.data, safe = False)
@@ -299,3 +300,11 @@ def commandeApi(request, id=0):
         commande = Commande.objects.get(idCommande=id)
         commande.delete()
         return JsonResponse("Deleted successfully", safe=False)
+
+
+# Image stockage
+@csrf_exempt
+def saveFile(request):
+    file = request.FILES['uploadedImage']
+    file_name = default_storage.save(file.name, file)
+    return JsonResponse(file_name, safe=False)

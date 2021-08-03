@@ -5,7 +5,9 @@ from django.urls import path
 from django.conf.urls import url, include
 
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^',include('Entities.urls')),
+    url(r'^api/',include('Entities.urls')),
 ]
+

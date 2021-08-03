@@ -18,6 +18,9 @@ class ClientSerializer(serializers.ModelSerializer):
             'avatarClient',
             'descriptionClient',
         )
+        extra_kwargs = {
+            'passwordClient':{'write_only': True},
+        }
 
 class  AdministrateurSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,6 +30,9 @@ class  AdministrateurSerializer(serializers.ModelSerializer):
             'loginAdmin',
             'passwordAdmin',
         )
+        extra_kwargs = {
+            'passwordAdmin':{'write_only': True},
+        }
 
 class CategorieSerializer(serializers.ModelSerializer):
     class Meta:
@@ -41,6 +47,7 @@ class ArticleSerializer(serializers.ModelSerializer):
         model = Article
         fields = (
             'idArticle',
+            'imageArticle',
             'categorieArticle',
             'nomArticle',
             'descriptionArticle',
