@@ -30,7 +30,7 @@ urlpatterns = [
     url(r'^commandes$', views.commandeApi),
     url(r'^commandes/([0-9]+)$', views.commandeApi),
 
-    url(r'^imagesArticles/$', views.saveFile),
+    url(r'^images-articles/$', views.saveFile),
 
 
 ]
