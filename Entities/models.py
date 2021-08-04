@@ -50,7 +50,7 @@ class Categorie(models.Model):
 # Article model, following the class diagramm specifications
 class Article(models.Model):
     idArticle = models.AutoField(primary_key=True, editable=False)
-    imageArticle = models.CharField(max_length=50, blank=True, null=True)
+    imageArticle = models.ImageField(blank=True, null=True)
     categorieArticle = models.ForeignKey(Categorie, on_delete=models.CASCADE)
     nomArticle = models.CharField(max_length=50)
     descriptionArticle = models.CharField(max_length=256)
