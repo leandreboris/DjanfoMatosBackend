@@ -19,7 +19,7 @@ class Client(models.Model):
     descriptionClient = models.CharField(max_length=256, blank=True, null=True)
 
     def __str__(self) -> str:
-        return super().__str__()
+        return self.loginClient
 
 
 
@@ -31,7 +31,7 @@ class Administrateur(models.Model):
     passwordAdmin = models.CharField(max_length=24)
     
     def __str__(self):
-        return super().__str__()
+        return self.loginAdmin
 
 
 # Categorie model, following the class diagramm specifications
@@ -40,7 +40,7 @@ class Categorie(models.Model):
     libelleCategorie = models.CharField(max_length=256)
 
     def __str__(self):
-        return super().__str__()
+        return self.libelleCategorie
 
     
     
@@ -59,7 +59,7 @@ class Article(models.Model):
     dateAjoutArticle = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return super().__str__()
+        return self.nomArticle
 
 
 
@@ -72,7 +72,7 @@ class ModeDeLivraison(models.Model):
     descriptionModeDeLivraison = models.CharField(max_length=256)
 
     def __str__(self):
-        return super().__str__()
+        return self.libelleModeDeLivraison
 
 
 # Mode de paiement model, following the class diagramm specifications
@@ -82,7 +82,7 @@ class ModeDePaiement(models.Model):
     descriptionModeDePaiement = models.CharField(max_length=256)
 
     def __str__(self):
-        return super().__str__()
+        return self.libelleModeDePaiement
 
 
 # Commande model, following the class diagramm specifications
@@ -94,7 +94,7 @@ class Commande(models.Model):
     descriptionCommande = models.CharField(max_length=256)
 
     def __str__(self):
-        return super().__str__()
+        return self.dateAjoutCommande
 
 
 
@@ -107,7 +107,7 @@ class Facture(models.Model):
     totalTtc = models.FloatField()
 
     def __str__(self):
-        return super().__str__()
+        return self.datePaiementFacture
 
 
 

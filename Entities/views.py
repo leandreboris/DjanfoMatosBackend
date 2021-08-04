@@ -1,5 +1,5 @@
-from Entities.models import *
-from Entities.serializers import *
+from .models import *
+from .serializers import *
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import  JSONParser
 from django.http.response import JsonResponse
@@ -302,9 +302,3 @@ def commandeApi(request, id=0):
         return JsonResponse("Deleted successfully", safe=False)
 
 
-# Image stockage
-@csrf_exempt
-def saveFile(request):
-    file = request.FILES['uploadedImage']
-    file_name = default_storage.save(file.name, file)
-    return JsonResponse(file_name, safe=False)
