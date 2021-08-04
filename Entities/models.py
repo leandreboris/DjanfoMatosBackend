@@ -18,6 +18,10 @@ class Client(models.Model):
     avatarClient = models.ImageField(blank=True, null=True)
     descriptionClient = models.CharField(max_length=256, blank=True, null=True)
 
+    def __str__(self) -> str:
+        return super().__str__()
+
+
 
 
 # Admin model, following the class diagramm specifications
@@ -25,12 +29,21 @@ class Administrateur(models.Model):
     idAdministrateur = models.AutoField(primary_key=True, editable=False)
     loginAdmin = models.CharField(max_length=20)
     passwordAdmin = models.CharField(max_length=24)
+    
+    def __str__(self):
+        return super().__str__()
 
 
 # Categorie model, following the class diagramm specifications
 class Categorie(models.Model):
     idCategorie = models.AutoField(primary_key=True, editable=False)
     libelleCategorie = models.CharField(max_length=256)
+
+    def __str__(self):
+        return super().__str__()
+
+    
+    
 
 
 
@@ -45,6 +58,10 @@ class Article(models.Model):
     prixArticle = models.FloatField()
     dateAjoutArticle = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return super().__str__()
+
+
 
 
 
@@ -54,11 +71,19 @@ class ModeDeLivraison(models.Model):
     libelleModeDeLivraison = models.CharField(max_length=50)
     descriptionModeDeLivraison = models.CharField(max_length=256)
 
+    def __str__(self):
+        return super().__str__()
+
+
 # Mode de paiement model, following the class diagramm specifications
 class ModeDePaiement(models.Model):
     idModeDePaiement = models.AutoField(primary_key=True, editable=False)
     libelleModeDePaiement = models.CharField(max_length=50)
     descriptionModeDePaiement = models.CharField(max_length=256)
+
+    def __str__(self):
+        return super().__str__()
+
 
 # Commande model, following the class diagramm specifications
 class Commande(models.Model):
@@ -68,6 +93,10 @@ class Commande(models.Model):
     dateAjoutCommande = models.DateTimeField(auto_now_add=True)
     descriptionCommande = models.CharField(max_length=256)
 
+    def __str__(self):
+        return super().__str__()
+
+
 
 # Facture model, following the class diagramm specifications
 class Facture(models.Model):
@@ -76,6 +105,10 @@ class Facture(models.Model):
     prixHtFacture = models.FloatField()
     totalHtFacture = models.FloatField()
     totalTtc = models.FloatField()
+
+    def __str__(self):
+        return super().__str__()
+
 
 
 
