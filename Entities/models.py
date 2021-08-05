@@ -107,7 +107,7 @@ class Facture(models.Model):
     totalTtc = models.FloatField()
 
     def __str__(self):
-        return self.datePaiementFacture
+        return super().__str__()
 
 
 
