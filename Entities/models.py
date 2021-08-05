@@ -18,6 +18,7 @@ class Client(models.Model):
     avatarClient = models.ImageField(blank=True, null=True)
     descriptionClient = models.CharField(max_length=256, blank=True, null=True)
 
+
     def __str__(self) -> str:
         return self.loginClient
 
@@ -101,13 +102,14 @@ class Commande(models.Model):
 # Facture model, following the class diagramm specifications
 class Facture(models.Model):
     idFacture = models.AutoField(primary_key=True, editable=False)
+    clientFacture  = models.ForeignKey(Client, on_delete=models.CASCADE)
     datePaiementFacture = models.DateTimeField(auto_now_add=True)
     prixHtFacture = models.FloatField()
     totalHtFacture = models.FloatField()
     totalTtc = models.FloatField()
 
     def __str__(self):
-        return super().__str__()
+        return "Facture de " + str(self.clientFacture)
 
 
 

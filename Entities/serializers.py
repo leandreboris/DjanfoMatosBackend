@@ -93,6 +93,7 @@ class FactureSerializer(serializers.ModelSerializer):
         model = Facture
         fields = (
             'idFacture',
+            'clientFacture',
             'datePaiementFacture',
             'prixHtFacture',
             'totalHtFacture', 
