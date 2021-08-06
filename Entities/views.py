@@ -1,15 +1,24 @@
 from .models import *
 from .serializers import *
+
+
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.parsers import  JSONParser
-
-from rest_framework import generics, permissions
-from knox.models import AuthToken
-from rest_framework.response import Response
-
-
-
 from django.http.response import JsonResponse
+from django.contrib.auth import login
+
+
+
+from rest_framework.parsers import  JSONParser
+from rest_framework import generics, permissions
+from rest_framework.response import Response
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+
+
+
+from knox.models import AuthToken
+from knox.views import LoginView as KnoxLoginView
+
+
 
 
 
@@ -65,6 +74,21 @@ class ClientRegisterAPI(generics.GenericAPIView):
         "token": AuthToken.objects.create(client)[1]
         })
 
+# Client Login API
+class ClientLoginAPI(KnoxLoginView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format=None):
+        serializer = AuthTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        login(request, user)
+        return super(ClientLoginAPI, self).post(request, format=None)
+
+
+
+
+
 
 
 # Administrateur API
@@ -114,6 +138,20 @@ class AdminRegisterAPI(generics.GenericAPIView):
         "admin": AdministrateurSerializer(admin, context=self.get_serializer_context()).data,
         "token": AuthToken.objects.create(admin)[1]
         })
+
+# Admin Login API
+class AdminLoginAPI(KnoxLoginView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format=None):
+        serializer = AuthTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        login(request, user)
+        return super(AdminLoginAPI, self).post(request, format=None)
+
+
+
 
 
 # Categorie API

@@ -1,5 +1,13 @@
-from django.conf.urls import url
 from Entities import views
+
+
+
+from django.conf.urls import url
+
+
+
+from knox import views as knox_views
+
 
 
 
@@ -7,13 +15,18 @@ from Entities import views
 urlpatterns = [
     url(r'^clients$', views.clientApi),
     url(r'^clients/([0-9]+)$', views.clientApi),
-    
     url(r'^clients/register$', views.ClientRegisterAPI.as_view(), name = 'Client Register API'),
+    url(r'clients/login$', views.ClientLoginAPI.as_view(), name='Client Login API'),
+    url(r'clients/logout$', knox_views.LogoutView.as_view(), name='Client Logout API'),
+    url(r'clients/logoutall$', knox_views.LogoutAllView.as_view(), name='Clients Logout All API'),
 
 
     url(r'^administrateurs$', views.administrateurApi),
     url(r'^administrateurs/([0-9]+)$', views.administrateurApi),
     url(r'^administrateurs/register$', views.AdminRegisterAPI.as_view(), name = 'Admin Register API'),
+    url(r'administrateurs/login$', views.AdminLoginAPI.as_view(), name='Admin Login API'),
+    url(r'administrateurs/logout$', knox_views.LogoutView.as_view(), name='Admin Logout API'),
+    url(r'administrateurs/logoutall$', knox_views.LogoutAllView.as_view(), name='Admins Logout All API'),
 
 
     url(r'^categories$', views.categorieApi),
