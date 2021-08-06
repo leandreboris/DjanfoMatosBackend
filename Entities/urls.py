@@ -8,11 +8,13 @@ urlpatterns = [
     url(r'^clients$', views.clientApi),
     url(r'^clients/([0-9]+)$', views.clientApi),
     
-    url(r'^clients/register$', views.RegisterAPI.as_view()),
+    url(r'^clients/register$', views.ClientRegisterAPI.as_view(), name = 'Client Register API'),
 
 
     url(r'^administrateurs$', views.administrateurApi),
     url(r'^administrateurs/([0-9]+)$', views.administrateurApi),
+    url(r'^administrateurs/register$', views.AdminRegisterAPI.as_view(), name = 'Admin Register API'),
+
 
     url(r'^categories$', views.categorieApi),
     url(r'^categories/([0-9]+)$', views.categorieApi),

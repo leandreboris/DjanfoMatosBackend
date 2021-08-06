@@ -52,8 +52,8 @@ def clientApi(request, id=0):
         client.delete()
         return JsonResponse("Deleted successfully", safe=False)
 
-# Register API
-class RegisterAPI(generics.GenericAPIView):
+# Client Register API
+class ClientRegisterAPI(generics.GenericAPIView):
     serializer_class = ClientSerializer
 
     def post(self, request, *args, **kwargs):
@@ -101,6 +101,19 @@ def administrateurApi(request, id=0):
         administrateur = Administrateur.objects.get(idAdministrateur=id)
         administrateur.delete()
         return JsonResponse("Deleted successfully", safe=False)
+
+# Admin Register API
+class AdminRegisterAPI(generics.GenericAPIView):
+    serializer_class = AdministrateurSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        admin = serializer.save()
+        return Response({
+        "admin": AdministrateurSerializer(admin, context=self.get_serializer_context()).data,
+        "token": AuthToken.objects.create(admin)[1]
+        })
 
 
 # Categorie API
