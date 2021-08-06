@@ -1,5 +1,7 @@
 from django.db import models
 from phonenumber_field import modelfields
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, UserManager
+
 
 
 
@@ -14,6 +16,7 @@ class Client(models.Model):
     telephoneClient = modelfields.PhoneNumberField()
     nomClient = models.CharField(max_length=50)
     prenomClient = models.CharField(max_length=50)
+    dateDeCreationDuCompte = models.DateTimeField(auto_now_add=True)
     dateDeNaissanceClient = models.DateField(blank=True, null=True)
     avatarClient = models.ImageField(blank=True, null=True)
     descriptionClient = models.CharField(max_length=256, blank=True, null=True)
