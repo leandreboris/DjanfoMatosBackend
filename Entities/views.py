@@ -1,9 +1,24 @@
-from Entities.models import *
-from Entities.serializers import *
+from .models import *
+from .serializers import *
+
+
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.parsers import  JSONParser
 from django.http.response import JsonResponse
-from django.core.files.storage import default_storage
+from django.contrib.auth import login
+
+
+
+from rest_framework.parsers import  JSONParser
+from rest_framework import generics, permissions
+from rest_framework.response import Response
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+
+
+
+from knox.models import AuthToken
+from knox.views import LoginView as KnoxLoginView
+
+
 
 
 
@@ -46,6 +61,34 @@ def clientApi(request, id=0):
         client.delete()
         return JsonResponse("Deleted successfully", safe=False)
 
+# Client Register API
+class ClientRegisterAPI(generics.GenericAPIView):
+    serializer_class = ClientSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        client = serializer.save()
+        return Response({
+        "client": ClientSerializer(client, context=self.get_serializer_context()).data,
+        "token": AuthToken.objects.create(client)[1]
+        })
+
+# Client Login API
+class ClientLoginAPI(KnoxLoginView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format=None):
+        serializer = AuthTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        login(request, user)
+        return super(ClientLoginAPI, self).post(request, format=None)
+
+
+
+
+
 
 
 # Administrateur API
@@ -82,6 +125,33 @@ def administrateurApi(request, id=0):
         administrateur = Administrateur.objects.get(idAdministrateur=id)
         administrateur.delete()
         return JsonResponse("Deleted successfully", safe=False)
+
+# Admin Register API
+class AdminRegisterAPI(generics.GenericAPIView):
+    serializer_class = AdministrateurSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        admin = serializer.save()
+        return Response({
+        "admin": AdministrateurSerializer(admin, context=self.get_serializer_context()).data,
+        "token": AuthToken.objects.create(admin)[1]
+        })
+
+# Admin Login API
+class AdminLoginAPI(KnoxLoginView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format=None):
+        serializer = AuthTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        login(request, user)
+        return super(AdminLoginAPI, self).post(request, format=None)
+
+
+
 
 
 # Categorie API
@@ -302,9 +372,3 @@ def commandeApi(request, id=0):
         return JsonResponse("Deleted successfully", safe=False)
 
 
-# Image stockage
-@csrf_exempt
-def saveFile(request):
-    file = request.FILES['uploadedImage']
-    file_name = default_storage.save(file.name, file)
-    return JsonResponse(file_name, safe=False)

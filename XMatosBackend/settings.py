@@ -37,11 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'corsheaders',
     'Entities',
     'rest_framework',
     'knox',
     'phonenumber_field',
+    'django_rename_app',
 ]
 
 MIDDLEWARE = [
@@ -81,6 +83,8 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTH_USER_MODEL = 'Entities.Account'
 
 WSGI_APPLICATION = 'XMatosBackend.wsgi.application'
 
@@ -133,6 +137,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
 MEDIA_URL = '/images/'
 
 STATICFILES_DIRS = [
